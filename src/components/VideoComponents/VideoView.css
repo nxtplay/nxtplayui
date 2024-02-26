@@ -1,0 +1,31 @@
+
+
+/* App.css or VideoView.css */
+.video-view-container {
+  display: flex;
+  flex-direction: row; /* Align children horizontally */
+  gap: 20px; /* Optional: adds some space between the sidebar and the main content */
+}
+
+.sidebar {
+  flex-basis: 300px; /* Adjust based on your preference */
+  flex-shrink: 0; /* Prevents the sidebar from shrinking */
+  /* Add more styling here to fit your design */
+}
+
+.main-content {
+  flex-grow: 1; /* Takes up the remaining space */
+  /* Add more styling here to fit your design */
+}
+
+@media (max-width: 768px) {
+  .video-view-container {
+    flex-direction: column;
+  }
+
+  .sidebar,
+  .main-content {
+    flex-basis: auto; /* Allow sidebar and main content to adjust based on content size */
+    flex-grow: 1; /* Let both take available space equally */
+  }
+}
