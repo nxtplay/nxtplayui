@@ -7,9 +7,24 @@ import VideoData from './VideoComponents/VideoData';
 import './VideoComponents/VideoView.css';
 import { getAuth, signOut } from "firebase/auth"; 
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for redirection
+import { useSearchParams } from 'react-router-dom';
+
 function VideoView() {
+
+    const noSelectedVideo = 'bf427813552a53bcc8748dac67c362d4'
+
+    let [searchParams, setSearchParams] = useSearchParams();
+    // console.log("param: " + searchParams.get('videoID'))
+    const videoID = searchParams.get('videoID');
+
+    // console.log(videoID)
+    
     const [videos, setVideos] = useState([]);
-    const [selectedVideoUID, setSelectedVideoUID] = useState('bf427813552a53bcc8748dac67c362d4');
+    const [selectedVideoUID, setSelectedVideoUID] = useState("");
+
+    console.log("START " + selectedVideoUID)
+    
+
     const [videosData, setVideosData] = useState([]);
 
     const navigate = useNavigate(); // Hook for navigation
@@ -25,6 +40,11 @@ function VideoView() {
                 console.error("Sign out error:", error);
         });
     };
+
+    useEffect(() => {
+        setSelectedVideoUID(videoID || noSelectedVideo);
+      }, [videoID]);
+
     useEffect(() => {
         // Fetch videos list and videos data from your API
         // This is a placeholder. Replace it with your actual API call
@@ -38,6 +58,8 @@ function VideoView() {
             { play: 'Play 1', playtype: 'Type 1', result: 'Result 1' },
             { play: 'Play 2', playtype: 'Type 2', result: 'Result 2' },
         ]);
+        
+
     }, []);
 
     useEffect(() => {
@@ -54,26 +76,44 @@ function VideoView() {
             }
         }; 
         fetchVideos();
+        
     }, []);
 
     const handleVideoSelect = (videoUID) => {
-        setSelectedVideoUID(videoUID);
+        // setSelectedVideoUID(videoUID);
+        navigate(`/videos?videoID=${videoUID}`)
         console.log('Selected Video UID:', videoUID);
     };
 
     return (
         <div className="video-view-container">
-        <aside className="sidebar">
-        <h1>Upload your files</h1>
-        <VideoUploader />
-        <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
-        <button onClick={handleSignOut}>Sign Out</button> {/* Sign-out button */}
-        </aside>
-        <main className="main-content">
-        <VideoPlayer videoUID={selectedVideoUID} />
+            
+            {selectedVideoUID === noSelectedVideo && 
+                <aside className="sidebar">
+                    <h1>Upload your files</h1>
+                    <VideoUploader />
+                    <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
+                    <button onClick={handleSignOut}>Sign Out</button> {/* Sign-out button */}
+                </aside>
+            }
 
-        <VideoData videosData={videosData} />
-        </main>
+            <main className="main-content">
+                
+                {selectedVideoUID !== noSelectedVideo &&
+                    <div>
+                        <VideoPlayer videoUID={selectedVideoUID} />
+                        <VideoData videosData={videosData} />
+                        <br/>
+                        <button onClick={()=>{navigate('/videos');}}>Back</button>
+                        <p>
+                            Video ID: {selectedVideoUID}
+                        </p>
+                    </div>
+                    
+                }
+                
+
+            </main>
         </div>
     );
 }
