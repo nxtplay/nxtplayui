@@ -65,7 +65,7 @@ function VideoView() {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/videos');
+                const response = await fetch('http://13.56.224.252:8080/api/videos');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

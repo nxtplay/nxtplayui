@@ -13,7 +13,7 @@ function FileUploader() {
     }));
 
     useEffect(() => {
-        uppy.use(Tus, { endpoint: 'http://localhost:8080/api/get-upload-url', chunkSize: 150 * 1024 * 1024 });
+        uppy.use(Tus, { endpoint: 'http://13.56.224.252:8080/api/get-upload-url', chunkSize: 150 * 1024 * 1024 });
 
         uppy.on("complete", (result) => {
             console.log("Upload complete! We’ve uploaded these files:", result.successful);
