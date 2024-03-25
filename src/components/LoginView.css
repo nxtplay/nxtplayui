@@ -1,0 +1,75 @@
+.login-container {
+  max-width: 500px;
+  padding: 40px;
+  background: #fff;
+  text-align: center;
+  border-radius: 8px;
+  position: relative; 
+}
+
+.login-container h2 {
+  margin-bottom: 16px;
+}
+
+.login-container input {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-actions .login-button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4285F4;
+  color: white;
+  cursor: pointer;
+}
+
+.login-actions .forgot-password {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.separator {
+  margin: 20px 0;
+}
+
+.google-sign-in {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #4285F4; /* Google color */
+  border: none;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+.sign-up-link {
+  font-size: 0.9rem;
+
+  margin-top: 20px;
+}
+
+/* Background  login page */
+.login-page {
+  height: 100vh;
+
+  background-image: url('field.png');
+  background-size: cover;
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
