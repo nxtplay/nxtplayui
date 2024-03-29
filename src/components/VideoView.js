@@ -145,7 +145,7 @@ function VideoView() {
                     
                 }
                 <div>
-                    <h1>Select an Option</h1>
+                    
                     <NestedDropdown data={jsonSeasonData} />
                 </div>
 

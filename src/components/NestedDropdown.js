@@ -1,3 +1,80 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import './NestedDropdown.css'; 
+
+const NestedDropdown = ({ data }) => {
+  const [visibleOpponents, setVisibleOpponents] = useState({});
+  const [visibleFilmGroups, setVisibleFilmGroups] = useState({});
+
+  const toggleOpponents = (seasonName) => {
+    setVisibleOpponents(prev => ({ ...prev, [seasonName]: !prev[seasonName] }));
+    if (!visibleOpponents[seasonName]) {
+      setVisibleFilmGroups({});
+    }
+  };
+
+  const toggleFilmGroups = (seasonName, opponentName) => {
+    const key = `${seasonName}-${opponentName}`;
+    setVisibleFilmGroups(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  return (
+    <div className="dropdown-container">
+      <h1>Select an Option</h1>
+      
+      {data.map((season) => (
+        <div key={season.season_name}>
+          
+          <button className="season-button" onClick={() => toggleOpponents(season.season_name)}>
+            {visibleOpponents[season.season_name] ? '[-] ' : '[+] '}
+            {season.season_name}
+          </button>
+
+          {visibleOpponents[season.season_name] && (
+            <div className="opponent-container">
+              {season.opponents.map((opponent) => (
+                <div key={opponent.opponent_name || opponent.game_name}>
+                  
+                  <button className="opponent-button" onClick={() => toggleFilmGroups(season.season_name, opponent.opponent_name || opponent.game_name)}>
+                    {visibleFilmGroups[`${season.season_name}-${opponent.opponent_name || opponent.game_name}`] ? '[-] ' : '[+] '}
+                    {opponent.opponent_name || opponent.game_name}
+                  </button>
+
+                  {visibleFilmGroups[`${season.season_name}-${opponent.opponent_name || opponent.game_name}`] && (
+                    <ul className="film-group-list">
+                      {opponent.film_group.map((group, index) => (
+                        <li key={index} className="film-group-item">{group}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+NestedDropdown.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      season_name: PropTypes.string.isRequired,
+      opponents: PropTypes.arrayOf(
+        PropTypes.shape({
+          opponent_name: PropTypes.string,
+          game_name: PropTypes.string,
+          film_group: PropTypes.arrayOf(PropTypes.string).isRequired,
+        })
+      ).isRequired,
+    })
+  ).isRequired,
+};
+
+export default NestedDropdown;
+
 
 
 // // import React, { useState, useEffect } from 'react';
@@ -291,73 +368,3 @@
 // };
 
 // export default NestedDropdown;
-
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import './NestedDropdown.css'; // Ensure you're importing your CSS file correctly
-
-const NestedDropdown = ({ data }) => {
-  const [visibleOpponents, setVisibleOpponents] = useState({});
-  const [visibleFilmGroups, setVisibleFilmGroups] = useState({});
-
-  const toggleOpponents = (seasonName) => {
-    setVisibleOpponents(prev => ({ ...prev, [seasonName]: !prev[seasonName] }));
-    if (!visibleOpponents[seasonName]) {
-      setVisibleFilmGroups({});
-    }
-  };
-
-  const toggleFilmGroups = (seasonName, opponentName) => {
-    const key = `${seasonName}-${opponentName}`;
-    setVisibleFilmGroups(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  return (
-    <div className="dropdown-container">
-      {data.map((season) => (
-        <div key={season.season_name}>
-          <button className="season-button" onClick={() => toggleOpponents(season.season_name)}>
-            {visibleOpponents[season.season_name] ? '[-] ' : '[+] '}
-            {season.season_name}
-          </button>
-          {visibleOpponents[season.season_name] && (
-            <div className="opponent-container">
-              {season.opponents.map((opponent) => (
-                <div key={opponent.opponent_name || opponent.game_name}>
-                  <button className="opponent-button" onClick={() => toggleFilmGroups(season.season_name, opponent.opponent_name || opponent.game_name)}>
-                    {visibleFilmGroups[`${season.season_name}-${opponent.opponent_name || opponent.game_name}`] ? '[-] ' : '[+] '}
-                    {opponent.opponent_name || opponent.game_name}
-                  </button>
-                  {visibleFilmGroups[`${season.season_name}-${opponent.opponent_name || opponent.game_name}`] && (
-                    <ul className="film-group-list">
-                      {opponent.film_group.map((group, index) => (
-                        <li key={index} className="film-group-item">{group}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-NestedDropdown.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      season_name: PropTypes.string.isRequired,
-      opponents: PropTypes.arrayOf(
-        PropTypes.shape({
-          opponent_name: PropTypes.string,
-          game_name: PropTypes.string,
-          film_group: PropTypes.arrayOf(PropTypes.string).isRequired,
-        })
-      ).isRequired,
-    })
-  ).isRequired,
-};
-
-export default NestedDropdown;
