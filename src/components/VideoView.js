@@ -8,10 +8,43 @@ import './VideoComponents/VideoView.css';
 import { getAuth, signOut } from "firebase/auth"; 
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for redirection
 import { useSearchParams } from 'react-router-dom';
+import NestedDropdown from './NestedDropdown';
 
 function VideoView() {
 
     const noSelectedVideo = 'bf427813552a53bcc8748dac67c362d4'
+    const [jsonSeasonData, setJsonSeasonData] = useState(
+    [
+        {
+          "season_name": "Season 1",
+          "opponents": [
+            {
+              "opponent_name": "Opponent 1A",
+              "film_group": ["FG1A 1", "FG1A 2"]
+            },
+            {
+              "opponent_name": "Opponent 1B",
+              "film_group": ["FG1B 1", "FG1B 2"]
+            }
+          ]
+        },
+        {
+          "season_name": "Season 2",
+          "opponents": [
+            {
+              "opponent_name": "Opponent 2A",
+              "film_group": ["FG2A 1", "FG2A 2"]
+            },
+            {
+              "opponent_name": "Opponent 2B",
+              "film_group": ["FG2B 1", "FG2B 2"]
+            }
+          ]
+        }
+      ]
+    );
+    
+
 
     let [searchParams, setSearchParams] = useSearchParams();
     // console.log("param: " + searchParams.get('videoID'))
@@ -111,6 +144,11 @@ function VideoView() {
                     </div>
                     
                 }
+                <div>
+                    <h1>Select an Option</h1>
+                    <NestedDropdown data={jsonSeasonData} />
+                </div>
+
                 
 
             </main>

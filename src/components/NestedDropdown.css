@@ -1,0 +1,46 @@
+.dropdown-container {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    text-align: left; /* Ensure all text is left-justified */
+  }
+  
+  .season-button, .opponent-button {
+    background-color: #0047BA;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    display: block;
+    width: calc(100% - 30px); /* Adjust width to account for padding */
+    text-align: left; /* Left-justify text within buttons */
+  }
+  
+  .season-button:hover, .opponent-button:hover {
+    background-color: #003C9D;
+  }
+  
+  .opponent-container {
+    margin-left: 20px;
+  }
+  
+  .film-group-list {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 40px;
+  }
+  
+  .film-group-item {
+    padding: 5px 0;
+  }
+  
+  .film-group-item:before {
+    content: "▸";
+    padding-right: 5px;
+    color: #0047BA;
+  }
+  
