@@ -1,0 +1,62 @@
+
+
+.video-data-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+  }
+  
+  .table-header {
+    background-color: #4a4a4a; /* Dark header to make the text pop */
+  }
+  
+  .header-cell {
+    cursor: pointer;
+    padding: 15px 20px;
+    color: #fff; /* White text for contrast */
+    border-bottom: 2px solid #ddd; /* Light border for a subtle separation */
+    text-transform: uppercase; /* Making header text uppercase for a classic sports feel */
+  }
+  
+  .header-cell:hover {
+    background-color: #5c5c5c; /* Slightly lighter on hover for feedback */
+  }
+  
+  .data-row:nth-child(odd) {
+    background-color: #f2f2f2; /* Zebra striping for rows */
+  }
+
+  .selected-row {
+    background-color: #2a2a2a; /* Darken the selected row */
+    color: white; /* Ensure text is readable on the dark background */
+  }
+  
+  .data-cell {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd; /* Light border to separate rows */
+    text-align: left;
+  }
+  
+  /* Sort indicators */
+  .header-cell:after {
+    content: '';
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .header-cell[data-sort='forward']:after {
+    content: '↓';
+  }
+  
+  .header-cell[data-sort='backward']:after {
+    content: '↑';
+  }
+
+  
+
+
+  

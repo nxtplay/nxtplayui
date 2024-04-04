@@ -9,6 +9,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for redirection
 import { useSearchParams } from 'react-router-dom';
 import NestedDropdown from './NestedDropdown';
+import VideoDataTable from './VideoDataTable';
 
 function VideoView() {
 
@@ -43,6 +44,12 @@ function VideoView() {
         }
       ]
     );
+
+    const footballData = [
+        {"id": 1, "Team": "Team A", "value2": "5", "value3": "2", "value4": "3", "value5": "Win", "value6": "OtherA"},
+        {"id": 2, "Team": "Team B", "value2": "4", "value3": null, "value4": "1", "value5": "Loss", "value6": "OtherB"},
+        {"id": 3, "Team": "Team C", "value2": "6", "value3": "2", "value4": "4", "value5": "Win", "value6": null},
+      ];
     
 
 
@@ -145,8 +152,12 @@ function VideoView() {
                     
                 }
                 <div>
-                    
                     <NestedDropdown data={jsonSeasonData} />
+                </div>
+
+                <div>
+                    <h1>Football Data</h1>
+                    <VideoDataTable data={footballData} />
                 </div>
 
                 

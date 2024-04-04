@@ -1,0 +1,63 @@
+.video-data-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.table-header {
+  background-color: #4a4a4a; /* Dark header to make the text pop */
+}
+
+.header-cell {
+  cursor: pointer;
+  padding: 15px 20px;
+  color: #fff; /* White text for contrast */
+  /* text-transform: uppercase; */
+}
+
+.header-cell:hover {
+  background-color: #5c5c5c; /* Slightly lighter on hover for feedback */
+}
+
+.data-row:nth-child(odd) {
+  background-color: #F2F2F2; /* Light gray for odd rows */
+}
+
+.data-row {
+  transition: background-color 0.3s ease; /* Smooth transition for hover and selection */
+}
+
+.data-row:hover {
+  background-color: #D3D3D3; /* A softer gray for hover */
+}
+
+.selected-row, .data-row.selected-row {
+  background-color: #303030; /* Significantly darker for the selected row */
+  color: white; /* Ensure text is readable on the selected background */
+  position: relative; /* Ensures the selected style has precedence */
+}
+
+.data-cell {
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd; /* Light border to separate rows */
+  text-align: left;
+}
+
+/* Sort indicators */
+.header-cell:after {
+  content: '';
+  float: right;
+  margin-left: 5px;
+}
+
+.header-cell[data-sort='forward']:after {
+  content: '↓';
+}
+
+.header-cell[data-sort='backward']:after {
+  content: '↑';
+}
