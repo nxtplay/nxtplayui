@@ -8,10 +8,50 @@ import './VideoComponents/VideoView.css';
 import { getAuth, signOut } from "firebase/auth"; 
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for redirection
 import { useSearchParams } from 'react-router-dom';
+import NestedDropdown from './NestedDropdown';
+import VideoDataTable from './VideoDataTable';
 
 function VideoView() {
 
     const noSelectedVideo = 'bf427813552a53bcc8748dac67c362d4'
+    const [jsonSeasonData, setJsonSeasonData] = useState(
+    [
+        {
+          "season_name": "Season 1",
+          "opponents": [
+            {
+              "opponent_name": "Opponent 1A",
+              "film_group": ["FG1A 1", "FG1A 2"]
+            },
+            {
+              "opponent_name": "Opponent 1B",
+              "film_group": ["FG1B 1", "FG1B 2"]
+            }
+          ]
+        },
+        {
+          "season_name": "Season 2",
+          "opponents": [
+            {
+              "opponent_name": "Opponent 2A",
+              "film_group": ["FG2A 1", "FG2A 2"]
+            },
+            {
+              "opponent_name": "Opponent 2B",
+              "film_group": ["FG2B 1", "FG2B 2"]
+            }
+          ]
+        }
+      ]
+    );
+
+    const footballData = [
+        {"id": 1, "Team": "Team A", "value2": "5", "value3": "2", "value4": "3", "value5": "Win", "value6": "OtherA"},
+        {"id": 2, "Team": "Team B", "value2": "4", "value3": null, "value4": "1", "value5": "Loss", "value6": "OtherB"},
+        {"id": 3, "Team": "Team C", "value2": "6", "value3": "2", "value4": "4", "value5": "Win", "value6": null},
+      ];
+    
+
 
     let [searchParams, setSearchParams] = useSearchParams();
     // console.log("param: " + searchParams.get('videoID'))
@@ -111,6 +151,15 @@ function VideoView() {
                     </div>
                     
                 }
+                <div>
+                    <NestedDropdown data={jsonSeasonData} />
+                </div>
+
+                <div>
+                    <h1>Football Data</h1>
+                    <VideoDataTable data={footballData} />
+                </div>
+
                 
 
             </main>

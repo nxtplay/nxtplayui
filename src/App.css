@@ -88,3 +88,14 @@
 
 /* Additional styles omitted for brevity */
 
+/* .dropdown-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+ .dropdown select {
+  width: 100%; 
+  padding: 8px; 
+  margin-top: 5px; 
+}  */
