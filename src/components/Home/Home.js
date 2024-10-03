@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome to Our App</h1>
-      <Link to="/login">Login</Link> | <Link to="/signup">Sign Up</Link>
+      <Link to="/login">Login</Link> 
     </div>
   );
 };

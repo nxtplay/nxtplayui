@@ -7,7 +7,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 
 function FileUploader() {
-    const [uppy, setUppy] = useState(new Uppy({
+    const [uppy] = useState(new Uppy({
         debug: true,
         autoProceed: false,
     }));
