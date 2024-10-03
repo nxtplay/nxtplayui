@@ -1,0 +1,73 @@
+
+/* VideoDataTable.css */
+
+/* Table Styles */
+.video-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.video-data-table th,
+.video-data-table td {
+    border: 1px solid #ccc; /* Add lines between cells */
+    padding: 8px;
+    position: relative; /* Needed for column striping */
+}
+
+.video-data-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* Alternate Row Colors */
+.video-data-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.video-data-table tbody tr:nth-child(even) {
+    background-color: #e9e9e9;
+}
+
+/* Alternate Column Colors */
+.video-data-table tbody tr td:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight transparency */
+}
+
+.video-data-table tbody tr:nth-child(odd) td:nth-child(odd),
+.video-data-table tbody tr:nth-child(even) td:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hover Effect */
+.video-data-table tr:hover {
+    background-color: #ddd !important;
+}
+
+/* Active Row Style */
+.video-data-table .active-row {
+    background-color: #4CAF50 !important;
+    color: white;
+}
+
+/* Scrollable Table Container */
+.table-container {
+    max-height: 400px; /* Adjust as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
+    .video-data-table {
+        font-size: 12px;
+    }
+    .video-data-table th,
+    .video-data-table td {
+        padding: 6px;
+    }
+}
+
