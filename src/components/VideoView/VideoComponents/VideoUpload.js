@@ -1,10 +1,11 @@
 
+
 import React, { useState, useEffect } from 'react';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus';
-import { DragDrop } from '@uppy/react';
+import { Dashboard } from '@uppy/react';
 import '@uppy/core/dist/style.css';
-import '@uppy/drag-drop/dist/style.css';
+import '@uppy/dashboard/dist/style.css';
 
 function FileUploader() {
     const [uppy] = useState(new Uppy({
@@ -17,22 +18,10 @@ function FileUploader() {
 
         uppy.on("complete", (result) => {
             console.log("Upload complete! We’ve uploaded these files:", result.successful);
-            // Here you can add any post-upload actions
         });
 
         return () => uppy.close(); // Cleanup on unmount
-    }, []); // Empty dependency array ensures this effect runs once on mount
-
-    const handleFileInputChange = (event) => {
-        const files = Array.from(event.target.files);
-        files.forEach(file => {
-            uppy.addFile({
-                name: file.name,
-                type: file.type,
-                data: file,
-            });
-        });
-    };
+    }, []);
 
     const handleUploadButtonClick = () => {
         if (uppy.getFiles().length === 0) {
@@ -44,9 +33,14 @@ function FileUploader() {
 
     return (
         <div>
-            <DragDrop uppy={uppy} />
-            <input type="file" id="fileInput" onChange={handleFileInputChange} multiple />
-            <button id="uploadButton" onClick={handleUploadButtonClick}>Upload</button>
+            <Dashboard 
+                uppy={uppy} 
+                height={480} 
+                width={590} 
+                proudlyDisplayPoweredBy={false}
+                note="Drop files here or click browse files"
+            />
+            <button id="uploadButton" onClick={handleUploadButtonClick} style={{ marginTop: '10px' }}>Upload</button>
         </div>
     );
 }

@@ -9,7 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@uppy/core": "^3.8.0",
-    "@uppy/dashboard": "^3.7.1",
+    "@uppy/dashboard": "^3.9.1",
     "@uppy/drag-drop": "^3.0.3",
     "@uppy/file-input": "^3.0.4",
     "@uppy/progress-bar": "^3.0.4",
