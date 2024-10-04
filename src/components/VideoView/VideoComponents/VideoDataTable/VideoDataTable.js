@@ -38,7 +38,6 @@ function VideoDataTable({ data, onRowClick, selectedRowIndex }) {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Video UID</th>
                         <th>Hash Col</th>
                         <th>Off Formation</th>
                         <th>Off Strength</th>
@@ -66,8 +65,8 @@ function VideoDataTable({ data, onRowClick, selectedRowIndex }) {
                         >
                             <td>{play.id}</td>
                             {Object.keys(play).map((key) => {
-                                if (key === 'id') {
-                                    return null; // ID is already rendered
+                                if (key === 'video_uid' || key === 'id') {
+                                    return null; // Skip rendering 'video_uid' and 'id' as 'id' is already rendered
                                 }
                                 return (
                                     <td
