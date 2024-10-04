@@ -2,14 +2,12 @@
 import React, { useState } from 'react';
 import './VideoDataTable.css';
 
-function VideoDataTable({ data, onRowClick }) {
+function VideoDataTable({ data, onRowClick, selectedRowIndex }) {
     const [footballData, setFootballData] = useState(data);
-    const [selectedRowId, setSelectedRowId] = useState(null);
     const [editableCell, setEditableCell] = useState({ rowId: null, key: null });
 
-    const handleRowClick = (videoUID, rowId) => {
-        setSelectedRowId(rowId); // Set the selected row
-        onRowClick(videoUID); // Trigger the callback to select the video
+    const handleRowClick = (index) => {
+        onRowClick(index); // Pass the index to the parent component
     };
 
     // Handle changes to editable fields
@@ -60,16 +58,16 @@ function VideoDataTable({ data, onRowClick }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {footballData.map((play) => (
+                    {footballData.map((play, index) => (
                         <tr
                             key={play.id}
-                            onClick={() => handleRowClick(play.video_uid, play.id)}
-                            className={play.id === selectedRowId ? 'selected-row' : ''}
+                            onClick={() => handleRowClick(index)}
+                            className={index === selectedRowIndex ? 'selected-row' : ''}
                         >
                             <td>{play.id}</td>
                             {Object.keys(play).map((key) => {
                                 if (key === 'id') {
-                                    return <td key={key}>{play[key]}</td>;
+                                    return null; // ID is already rendered
                                 }
                                 return (
                                     <td

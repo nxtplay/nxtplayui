@@ -34,47 +34,8 @@ import VideoDataTable from './VideoComponents/VideoDataTable/VideoDataTable';
 
 
 function VideoView() {
-    const selectedRowIndex = 0;
-
-    const [jsonSeasonData] = useState([
-        {
-            "season_name": "Season 1",
-            "opponents": [
-                {
-                    "opponent_name": "Opponent 1A",
-                    "film_group": ["FG1A"]
-                },
-                {
-                    "opponent_name": "Opponent 1B",
-                    "film_group": ["FG1B"]
-                }
-            ]
-        },
-        {
-            "season_name": "Season 2",
-            "opponents": [
-                {
-                    "opponent_name": "Opponent 2A",
-                    "film_group": ["FG2A"]
-                },
-                {
-                    "opponent_name": "Opponent 2B",
-                    "film_group": ["FG2B"]
-                }
-            ]
-        }
-    ]);
-
-    let [searchParams] = useSearchParams();
-
-    const videoID = searchParams.get('videoID');
-
-    const [videos, setVideos] = useState([]);
+    const [selectedRowIndex, setSelectedRowIndex] = useState(0);
     const [selectedVideoUID, setSelectedVideoUID] = useState("");
-    const [selectedFilmGroup, setSelectedFilmGroup] = useState("FG1A");
-    const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-
-    const [videoData, setVideosData] = useState([]);
 
     const navigate = useNavigate();
     const auth = getAuth();
@@ -87,73 +48,28 @@ function VideoView() {
         });
     };
 
-    // Update selectedVideoUID when videoID from URL changes
+    // Update selectedVideoUID when selectedRowIndex changes
     useEffect(() => {
-        if (videoID) {
-            setSelectedVideoUID(videoID);
-            const index = videos.findIndex(video => video.video_uid === videoID);
-            if (index !== -1) {
-                setCurrentVideoIndex(index);
-            }
+        if (footballData[selectedRowIndex]) {
+            setSelectedVideoUID(footballData[selectedRowIndex].video_uid);
         }
-    }, [videoID, videos]);
-
-    // Load videos based on selected film group
-    useEffect(() => {
-        // Replace with your actual video data and valid video UIDs
-        const allVideos = [
-            { filmGroup: 'FG1A', videos: [
-                { title: 'FG1A Clip 1', video_uid: 'dcfdfb3cf9198f53f6db3780ce14d669' },
-                { title: 'FG1A Clip 2', video_uid: '0b036033ce13de4167c04c15d21b7c65' }
-            ] },
-            { filmGroup: 'FG1B', videos: [
-                { title: 'FG1B Clip 1', video_uid: 'bf427813552a53bcc8748dac67c362d4' },
-                { title: 'FG1B Clip 2', video_uid: 'a1b2c3d4e5f67890abcdef1234567890' }
-            ] },
-            // Add other film groups as needed
-        ];
-
-        let filteredVideos = [];
-
-        if (selectedFilmGroup) {
-            const group = allVideos.find(group => group.filmGroup === selectedFilmGroup);
-            if (group) {
-                filteredVideos = group.videos;
-            }
-        }
-
-        setVideos(filteredVideos);
-
-        // Reset currentVideoIndex
-        setCurrentVideoIndex(0);
-
-        // Reset selectedVideoUID
-        if (filteredVideos.length > 0) {
-            setSelectedVideoUID(filteredVideos[0].video_uid);
-        } else {
-            setSelectedVideoUID(footballData[selectedRowIndex]);
-        }
-
-        setVideosData([
-            { play: 'Play 1', playtype: 'Type 1', result: 'Result 1' },
-            { play: 'Play 2', playtype: 'Type 2', result: 'Result 2' }
-        ]);
-    }, [selectedFilmGroup]);
-
-    // Update selectedVideoUID when currentVideoIndex changes
-    useEffect(() => {
-        if (videos && videos.length > 0 && videos[currentVideoIndex]) {
-            setSelectedVideoUID(videos[currentVideoIndex].video_uid);
-        }
-    }, [currentVideoIndex, videos]);
+    }, [selectedRowIndex]);
 
     // Handle arrow key navigation
     useEffect(() => {
         const handleKeyDown = (event) => {
-            if (event.key === 'ArrowRight') {
-                setCurrentVideoIndex((prevIndex) => Math.min(prevIndex + 1, videos.length - 1));
-            } else if (event.key === 'ArrowLeft') {
-                setCurrentVideoIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+            const tag = document.activeElement.tagName.toLowerCase();
+            if (tag === 'input' || tag === 'textarea') {
+                // Do not handle arrow keys when an input or textarea is focused
+                return;
+            }
+
+            if (event.key === 'ArrowDown') {
+                event.preventDefault(); // Prevent default scrolling behavior
+                setSelectedRowIndex((prevIndex) => Math.min(prevIndex + 1, footballData.length - 1));
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                setSelectedRowIndex((prevIndex) => Math.max(prevIndex - 1, 0));
             }
         };
 
@@ -162,62 +78,35 @@ function VideoView() {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [videos]);
+    }, []);
 
-    const handleFilmGroupSelect = (selectedGroup) => {
-        setSelectedFilmGroup(selectedGroup);
+    // Handle row click to update selectedRowIndex
+    const handleRowClick = (index) => {
+        setSelectedRowIndex(index);
     };
-    const handleRowClick = (videoUID) => {
-        setSelectedVideoUID(videoUID);
-    };
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.key === 'ArrowRight') {
-                setCurrentVideoIndex((prevIndex) => {
-                    const newIndex = Math.min(prevIndex + 1, videos.length - 1);
-                    setSelectedVideoUID(videos[newIndex].video_uid);
-                    return newIndex;
-                });
-            } else if (event.key === 'ArrowLeft') {
-                setCurrentVideoIndex((prevIndex) => {
-                    const newIndex = Math.max(prevIndex - 1, 0);
-                    setSelectedVideoUID(videos[newIndex].video_uid);
-                    return newIndex;
-                });
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [videos]);
 
     return (
         <div className="video-view-container">
-        <aside className="sidebar">
-        <NestedDropdown data={jsonSeasonData} onSelect={handleFilmGroupSelect} />
-        <div>  
+            <aside className="sidebar">
+                <button className="sign-out-button" onClick={handleSignOut}>Sign Out</button>
+                <button className="back-button" onClick={() => navigate('/Dashboard')}>Back</button>
+            </aside>
 
-        <button className="sign-out-button" onClick={handleSignOut}>Sign Out</button>
-        <button className="back-button" onClick={() => navigate('/Dashboard')}>Back</button>
+            <main className="main-content">
+                <div className="video-content">
+                    <VideoPlayer videoUID={selectedVideoUID} />
+                    <div>
+                        <h2>Football Data</h2>
+                        <VideoDataTable
+                            data={footballData}
+                            onRowClick={handleRowClick}
+                            selectedRowIndex={selectedRowIndex} // Pass selectedRowIndex to the table
+                        />
+                    </div>
+                </div>
+            </main>
         </div>
-        </aside>
-
-        <main className="main-content">
-    <div className="video-content">
-        <VideoPlayer videoUID={selectedVideoUID} />
-        <div>
-            <h2>Football Data</h2>
-            <VideoDataTable
-                data={footballData}
-                onRowClick={handleRowClick}
-                currentVideoUID={selectedVideoUID} // Pass the current video UID
-            />
-        </div>
-    </div>
-</main>        </div>
     );
-}export default VideoView;
+}
 
+export default VideoView;
